@@ -6,7 +6,9 @@ const seedrandom = require('seedrandom');
 
 const app = express();
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000',
+            'https://book-store-vert-nine.vercel.app'
+    ]
 };
 
 app.use(cors(corsOptions));
