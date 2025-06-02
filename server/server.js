@@ -3,7 +3,13 @@ const cors = require('cors');
 const faker = require('@faker-js/faker').faker;
 const seedrandom = require('seedrandom');
 
+
 const app = express();
+const corsOptions = {
+    origin: 'http://localhost:3000',
+};
+
+app.use(cors(corsOptions));
 const port = process.env.PORT || 10000;
 
 const generateBook = (index, seed, language, avgReviews, avgLikes) => {
@@ -18,7 +24,7 @@ const generateBook = (index, seed, language, avgReviews, avgLikes) => {
     const finalReviewCount = reviewsInt + (rng() < fractional ? 1 : 0);
 
     const reviewList = Array.from({ length: finalReviewCount }, () => ({
-        author: faker.name.fullName(),
+        author: faker.person.fullName(),
         text: faker.lorem.sentence(),
     }));
 
@@ -28,9 +34,9 @@ const generateBook = (index, seed, language, avgReviews, avgLikes) => {
 
     return {
         index: index + 1,
-        isbn: faker.datatype.number({ min: 1000000000000, max: 9999999999999 }).toString(),
+        isbn: Array.from({ length: 13 }, () => Math.floor(rng() * 10)).join(''),
         title: faker.commerce.productName(),
-        authors: [faker.name.fullName()],
+        authors: [faker.person.fullName()],
         publisher: faker.company.name(),
         reviews: reviewList,
         likes: finalLikesCount,
@@ -51,6 +57,8 @@ app.get('/books', (req, res) => {
 
     res.json(books);
 });
+
+
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
