@@ -1,40 +1,7 @@
-import seedrandom from 'seedrandom';
-import { faker } from '@faker-js/faker';
 import BookTable from "./components/BookTable";
 import Header from "./components/Header";
 import './index.css'
-import React, { useState } from 'react';
-
-const generateBook = (index, seed, language, avgReviews, avgLikes) => {
-    const combinedSeed = seed + index.toString();
-    const rng = seedrandom(combinedSeed);
-
-    faker.locale = language;
-    faker.seed(rng.int32());
-
-    const reviewsInt = Math.floor(avgReviews);
-    const fractional = avgReviews - reviewsInt;
-    const finalReviewCount = reviewsInt + (rng() < fractional ? 1 : 0);
-
-    const reviewList = Array.from({ length: finalReviewCount }, () => ({
-        author: faker.name.fullName(),
-        text: faker.lorem.sentence(),
-    }));
-
-    const likesInt = Math.floor(avgLikes);
-    const likesFraction = avgLikes - likesInt;
-    const finalLikesCount = likesInt + (rng() < likesFraction ? 1 : 0);
-
-    return {
-        index: index + 1,
-        isbn: faker.datatype.number({ min: 1000000000000, max: 9999999999999 }).toString(),
-        title: faker.commerce.productName(),
-        authors: [faker.name.fullName()],
-        publisher: faker.company.name(),
-        reviews: reviewList,
-        likes: finalLikesCount,
-    };
-};
+import React, { useState, useEffect } from 'react';
 
 function App() {
     const [seed, setSeed] = useState('58933423');
@@ -44,17 +11,16 @@ function App() {
     const [books, setBooks] = useState([]);
     const [page, setPage] = useState(0);
 
+    const fetchBooks = async (pageToFetch = 0) => {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/books?seed=${seed}&language=${language}&likes=${likes}&reviews=${reviews}&page=${pageToFetch}`);
+        const data = await res.json();
+        return data;
+    };
+
     const loadMore = () => {
-        setPage(prevPage => {
-            const nextPage = prevPage + 1;
-            const startIndex = books.length;
-
-            const generatedBooks = Array.from({ length: 10 }, (_, i) =>
-                generateBook(startIndex + i, seed, language, parseFloat(reviews), parseFloat(likes))
-            );
-
+        fetchBooks(page + 1).then(newBooks => {
             setBooks(prevBooks => {
-                const allBooks = [...prevBooks, ...generatedBooks];
+                const allBooks = [...prevBooks, ...newBooks];
                 const seen = new Set();
                 return allBooks.filter(book => {
                     if (seen.has(book.index)) return false;
@@ -62,17 +28,15 @@ function App() {
                     return true;
                 });
             });
-            return nextPage;
+            setPage(prevPage => prevPage + 1);
         });
     };
 
-    React.useEffect(() => {
-        setPage(0);
-        const count = 20;
-        const newBooks = Array.from({ length: count }, (_, i) =>
-            generateBook(i, seed, language, parseFloat(reviews), parseFloat(likes))
-        );
-        setBooks(newBooks);
+    useEffect(() => {
+        setPage(0); 
+        fetchBooks(0).then(newBooks => {
+            setBooks(newBooks);
+        });
     }, [seed, language, likes, reviews]);
 
   return (

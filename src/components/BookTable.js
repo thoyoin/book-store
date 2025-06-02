@@ -16,9 +16,9 @@ const BookTableRow = ({ book }) => {
                         aria-expanded={isOpen}
                         aria-controls={`bookDetails-${book.index}`}
                         onClick={() => {
-                            const el = document.getElementById(`bookDetails-${book.index}`);
-                            if (!el) return;
-                            const bsCollapse = window.bootstrap.Collapse.getOrCreateInstance(el);
+                            const elem = document.getElementById(`bookDetails-${book.index}`);
+                            if (!elem) return;
+                            const bsCollapse = window.bootstrap.Collapse.getOrCreateInstance(elem);
                             bsCollapse.toggle();
                             setIsOpen(prev => !prev)
                         }}
