@@ -7,11 +7,14 @@ const BookTableRow = ({ book }) => {
 
     return (
         <>
-            <tr style={{ height: '50px' }}>
+            <tr style={{ height: '50px' }} className={`${isOpen ? 'expanded-row' : ''}`}>
                 <td style={{ width: '5%' }}>
                     <button
                         className="btn btn-link p-0 text-primary-emphasis"
                         type="button"
+                        title="Toggle details"
+                        aria-expanded={isOpen}
+                        aria-controls={`bookDetails-${book.index}`}
                         onClick={() => {
                             const el = document.getElementById(`bookDetails-${book.index}`);
                             if (!el) return;
@@ -19,7 +22,7 @@ const BookTableRow = ({ book }) => {
                             bsCollapse.toggle();
                             setIsOpen(prev => !prev)
                         }}
-                        style={{ cursor: 'pointer', verticalAlign:'middle' }}
+                        style={{ cursor: 'pointer', margin:'7px'}}
                     >
                         <i className={`bi ${isOpen ? 'bi-caret-up' : 'bi-caret-down'} fs-4`}></i>
                     </button>
