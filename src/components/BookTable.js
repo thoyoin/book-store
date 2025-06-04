@@ -8,7 +8,7 @@ const BookTableRow = ({ book }) => {
     return (
         <>
             <tr style={{ height: '50px' }} className={`${isOpen ? 'expanded-row' : ''}`}>
-                <td style={{ width: '5%' }}>
+                <td style={{width: '5%', verticalAlign:'middle'}} id='arrowBtn'>
                     <button
                         className="btn btn-link p-0 text-primary-emphasis"
                         type="button"
@@ -27,11 +27,29 @@ const BookTableRow = ({ book }) => {
                         <i className={`bi ${isOpen ? 'bi-caret-up' : 'bi-caret-down'} fs-4`}></i>
                     </button>
                 </td>
-                <td style={{ width: '5%', verticalAlign:'middle' }} className='fw-bold'>{book.index}</td>
-                <td style={{ width: '20%', verticalAlign:'middle' }} >{book.isbn}</td>
-                <td style={{ width: '30%', verticalAlign:'middle'}}>{book.title}</td>
-                <td style={{ width: '25%', verticalAlign:'middle' }}>{book.authors.join(', ')}</td>
-                <td style={{ width: '14%', verticalAlign:'middle' }}>{book.publisher}</td>
+                <td style={{ width: '5%', verticalAlign:'middle', padding:'0 13px' }} className='fw-bold'>{book.index}</td>
+                <td style={{ width: '20%', verticalAlign:'middle' }} id='isbn'>{book.isbn}</td>
+                <td style={{ width: '30%', verticalAlign:'middle'}} id='title'>
+                    <a 
+                    style={{textDecoration:'none'}}
+                    className="link link-dark" 
+                    id='titleBtn'
+                    data-bs-toggle="collapse" 
+                    href={`bookDetails-${book.index}`} 
+                    role="button" 
+                    aria-expanded={isOpen}
+                    aria-controls={`bookDetails-${book.index}`}
+                    onClick={() => {
+                        const elem = document.getElementById(`bookDetails-${book.index}`);
+                        if (!elem) return;
+                        const bsCollapse = window.bootstrap.Collapse.getOrCreateInstance(elem);
+                        bsCollapse.toggle();
+                        setIsOpen(prev => !prev)
+                    }}
+                    >{book.title}</a>
+                    </td>
+                <td style={{ width: '25%', verticalAlign:'middle' }} id='authors'>{book.authors.join(', ')}</td>
+                <td style={{ width: '24%', verticalAlign:'middle' }} id='publisher'>{book.publisher}</td>
             </tr>
             <tr>
                 <td colSpan="6" className="p-0 border-0">
@@ -43,7 +61,7 @@ const BookTableRow = ({ book }) => {
                                     src={`https://placehold.co/120x160?text=${encodeURIComponent(book.title)}+${encodeURIComponent(book.authors[0])}`}
                                     alt="cover"
                                     style={{ borderRadius: '4px', objectFit: 'cover' }}
-                                    className='m-4'
+                                    className='m-3 w-100'
                                     />
                                     <span className="badge rounded-pill text-bg-primary mt-4 w-100 d-flex flex-row justify-content-center align-items-center" style={{maxWidth:'50px'}}>{book.likes}
                                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" className="bi bi-hand-thumbs-up ms-1" viewBox="0 0 16 16">
@@ -84,12 +102,12 @@ const BookTable = ({ books, loadMore }) => {
             <table className="table mb-0" style={{ tableLayout: 'fixed', width: '100%' }}>
                 <thead className="table-light">
                     <tr>
-                        <th style={{ width: '5%' }}></th>
-                        <th style={{ width: '5%' }}>#</th>
-                        <th style={{ width: '20%' }}>ISBN</th>
-                        <th style={{ width: '30%' }}>Title</th>
-                        <th style={{ width: '25%' }}>Author(s)</th>
-                        <th style={{ width: '15%' }}>Publisher</th>
+                        <th style={{ width: '5%' }} id='arrowBtn'></th>
+                        <th style={{ width: '5%', paddingLeft:'13px'}}>#</th>
+                        <th style={{ width: '20%' }} id='isbn'>ISBN</th>
+                        <th style={{ width: '27%' }} id='title'>Title</th>
+                        <th style={{ width: '23%' }} id='authorHead'>Author(s)</th>
+                        <th style={{ width: '23%' }}>Publisher</th>
                     </tr>
                 </thead>
             </table>

@@ -23,3 +23,33 @@ select:focus {
 .expanded-row > td { 
     background-color: #f0f0f0 !important;
 }
+
+@media(max-width: 762px) {
+    #arrowBtn {
+        display: none;
+    }
+    #titleBtn {
+        text-decoration: underline !important;
+    }
+}
+
+@media(max-width: 580px) {
+    #isbn {
+        display: none;
+    }
+    #publisher { 
+        width: 30% !important;
+    }
+    #authors {
+        width: 35% !important;
+    }
+    #authorHead {
+        width: 35% !important;
+    }
+}
+
+@media(max-width: 500px) {
+    #title {
+        padding-left: 20px;
+    }
+}

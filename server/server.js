@@ -31,7 +31,7 @@ const generateBook = (index, seed, language, avgReviews, avgLikes) => {
     return {
         index: index + 1,
         isbn: Array.from({ length: 13 }, () => Math.floor(rng() * 10)).join(''),
-        title: faker.company.name(),
+        title: faker.commerce.productName(),
         authors: [faker.person.fullName()],
         publisher: faker.person.fullName(),
         reviews: reviewList,
