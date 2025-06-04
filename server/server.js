@@ -12,7 +12,7 @@ const generateBook = (index, seed, language, avgReviews, avgLikes) => {
     const combinedSeed = seed + index.toString() + language;
     const rng = seedrandom(combinedSeed);
 
-    faker.setLocale(language);
+    faker.locale = language;
     faker.seed(rng.int32());
 
     const reviewsInt = Math.floor(avgReviews);
