@@ -1,20 +1,27 @@
 import React from "react";
 
+const languages = [
+    { label: 'English (US)', code: 'en' },
+    { label: 'German (Germany)', code: 'de' },
+    { label: 'Spanish (Spain)', code: 'es' }
+];
+
+
 const Header = ({language, setLanguage, seed, setSeed, likes, setLikes, reviews, setReviews}) => {
     const generateSeed = () => {
         const newSeed = Math.floor(Math.random() * 1e9)
         setSeed(newSeed.toString());
     }
-    const languages = [
-        { label: 'English (US)', code: 'en' },
-        { label: 'German (Germany)', code: 'de' },
-        { label: 'Spanish (Spain)', code: 'es' }
-    ];
 
     return (
         <div className="container-fluid text-bg-light p-2 d-flex flex-row align-items-center justify-content-around">
             <div className="form-floating col-md-2 m-2">
-                <select id='langInput' className="form-select" aria-label="Default select example" value={language} onChange={(e) => setLanguage(e.target.value)}>
+                <select 
+                    id='langInput' 
+                    className="form-select" 
+                    aria-label="Default select example" 
+                    value={language} 
+                    onChange={(e) => setLanguage(e.target.value)}>
                     {languages.map((lang) => (
                         <option key={lang.code} value={lang.code}>
                             {lang.label}

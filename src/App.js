@@ -5,9 +5,9 @@ import React, { useState, useEffect } from 'react';
 
 function App() {
     const [seed, setSeed] = useState('58933423');
-    const [likes, setLikes] = useState('5.0')
-    const [reviews, setReviews] = useState('5.0')
-    const [language, setLanguage] = useState('en')
+    const [likes, setLikes] = useState('5.0');
+    const [reviews, setReviews] = useState('5.0');
+    const [language, setLanguage] = useState('en');
     const [books, setBooks] = useState([]);
     const [page, setPage] = useState(0);
 

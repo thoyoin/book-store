@@ -111,7 +111,7 @@ const BookTable = ({ books, loadMore }) => {
                         <tbody>
                         {books.map((book, i) => (
                         <BookTableRow
-                            key={`${book.index}-${i}`}
+                            key={`${book.index}-${book.isbn}`}
                             book={book}
                         />
                         ))}

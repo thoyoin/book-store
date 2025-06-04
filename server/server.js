@@ -1,24 +1,30 @@
 const express = require('express');
 const cors = require('cors');
-const faker = require('@faker-js/faker').faker;
 const seedrandom = require('seedrandom');
+const { Faker } = require('@faker-js/faker');
+const en = require('@faker-js/faker/locale/en');
+const de = require('@faker-js/faker/locale/de');
+const es = require('@faker-js/faker/locale/es');
 
+const faker = new Faker({
+    locales: {
+        en: en,
+        de: de,
+        es: es,
+    },
+    locale: 'en',
+});
 
 const app = express();
-const corsOptions = {
-    origin: ['http://localhost:3000',
-            'https://book-store-vert-nine.vercel.app'
-    ]
-};
 
-app.use(cors(corsOptions));
+app.use(cors());
 const port = process.env.PORT || 10000;
 
 const generateBook = (index, seed, language, avgReviews, avgLikes) => {
-    const combinedSeed = seed + index.toString();
+    const combinedSeed = seed + index.toString() + language;
     const rng = seedrandom(combinedSeed);
 
-    faker.locale = language;
+    faker.setLocale(language);
     faker.seed(rng.int32());
 
     const reviewsInt = Math.floor(avgReviews);
@@ -37,9 +43,9 @@ const generateBook = (index, seed, language, avgReviews, avgLikes) => {
     return {
         index: index + 1,
         isbn: Array.from({ length: 13 }, () => Math.floor(rng() * 10)).join(''),
-        title: faker.commerce.productName(),
+        title: faker.company.name(),
         authors: [faker.person.fullName()],
-        publisher: faker.company.name(),
+        publisher: faker.person.fullName(),
         reviews: reviewList,
         likes: finalLikesCount,
     };
