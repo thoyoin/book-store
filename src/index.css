@@ -24,6 +24,7 @@ select:focus {
     background-color: #f0f0f0 !important;
 }
 
+
 @media(max-width: 762px) {
     #arrowBtn {
         display: none;
@@ -33,18 +34,21 @@ select:focus {
     }
 }
 
-@media(max-width: 580px) {
+@media(max-width: 600px) {
     #isbn {
         display: none;
     }
     #publisher { 
-        width: 30% !important;
+        width: 35% !important;
     }
     #authors {
         width: 35% !important;
     }
     #authorHead {
-        width: 35% !important;
+        width: 31% !important;
+    }
+    #publisherHead {
+        width: 32% !important;
     }
 }
 
@@ -53,3 +57,4 @@ select:focus {
         padding-left: 20px;
     }
 }
+

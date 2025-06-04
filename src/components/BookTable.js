@@ -100,14 +100,14 @@ const BookTable = ({ books, loadMore }) => {
     return (
         <div className="container-fluid p-0 text-bg-light">
             <table className="table mb-0" style={{ tableLayout: 'fixed', width: '100%' }}>
-                <thead className="table-light">
+                <thead className='table-light'>
                     <tr>
                         <th style={{ width: '5%' }} id='arrowBtn'></th>
                         <th style={{ width: '5%', paddingLeft:'13px'}}>#</th>
                         <th style={{ width: '20%' }} id='isbn'>ISBN</th>
                         <th style={{ width: '27%' }} id='title'>Title</th>
                         <th style={{ width: '23%' }} id='authorHead'>Author(s)</th>
-                        <th style={{ width: '23%' }}>Publisher</th>
+                        <th style={{ width: '23%' }} id='publisherHead'>Publisher</th>
                     </tr>
                 </thead>
             </table>
