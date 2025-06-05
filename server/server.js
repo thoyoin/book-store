@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const seedrandom = require('seedrandom');
-const { faker } = require('@faker-js/faker');
+const { fakerES } = require('@faker-js/faker');
 
 const app = express();
 
@@ -11,6 +11,8 @@ const port = process.env.PORT || 10000;
 const generateBook = (index, seed, language, avgReviews, avgLikes) => {
     const combinedSeed = seed + index.toString() + language;
     const rng = seedrandom(combinedSeed);
+
+    const faker = fakerES;
 
     faker.locale = language;
     faker.seed(rng.int32());
