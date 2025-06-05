@@ -112,7 +112,7 @@ const BookTableRow = ({ book }) => {
                               </div>
                             </div>
                         </div>
-                        </div>
+                    </div>
                 </td>
             </tr>
         </>
@@ -169,6 +169,8 @@ const BookTable = ({ books, loadMore, view }) => {
 
 
 const GalleryView = ({ books, loadMore }) => {
+    const [isOpen, setIsOpen] = useState({});
+
     return (
         <div id="scrollableDivGallery" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
             <InfiniteScroll
@@ -189,10 +191,73 @@ const GalleryView = ({ books, loadMore }) => {
                         <div className="col" key={`${book.index}-${book.isbn}`}>
                             <div className="card h-100 d-flex flex-column align-items-center justify-content-between p-2">
                                 <div className="d-flex justify-content-center mt-2">
-                                  <BookCover title={book.title} author={book.authors && book.authors[0] ? book.authors[0] : ''} />
+                                  <a
+                                    style={{textDecoration:'none'}}
+                                    className="link link-dark" 
+                                    data-bs-toggle="collapse" 
+                                    href={`bookDetails-${book.index}`} 
+                                    role="button" 
+                                    aria-expanded={isOpen}
+                                    aria-controls={`bookDetails-${book.index}`}
+                                    onClick={() => {
+                                        const elem = document.getElementById(`bookDetails-${book.index}`);
+                                        if (!elem) return;
+                                        const bsCollapse = window.bootstrap.Collapse.getOrCreateInstance(elem);
+                                        bsCollapse.toggle();
+                                        setIsOpen(prev => !prev);
+                                    }}  
+                                  ><BookCover title={book.title} author={book.authors && book.authors[0] ? book.authors[0] : ''} /></a>
                                 </div>
                                 <div className="card-body w-100">
-                                    <h5 className="card-title">{book.title}</h5>
+                                    <h5 className="card-title">
+                                        <a
+                                            style={{textDecoration:'none'}}
+                                            className="link link-dark" 
+                                            data-bs-toggle="collapse" 
+                                            href={`bookDetails-${book.index}`} 
+                                            role="button" 
+                                            aria-expanded={isOpen}
+                                            aria-controls={`bookDetails-${book.index}`}
+                                            onClick={() => {
+                                                const elem = document.getElementById(`bookDetails-${book.index}`);
+                                                if (!elem) return;
+                                                const bsCollapse = window.bootstrap.Collapse.getOrCreateInstance(elem);
+                                                bsCollapse.toggle();
+                                                setIsOpen(prev => !prev);
+                                            }}  
+                                        >{book.title}</a>
+                                    </h5>
+
+                                    <div id={`bookDetails-${book.index}`} className="collapse" style={{ backgroundColor: '#f8f9fa' }}>
+                                        <div className="card card-body">
+                                            <div className="d-flex flex-column gap-3 align-items-center">
+                                                <div className='d-flex flex-column mt-2 align-items-center'>
+                                                        <span className="badge rounded-pill text-bg-primary px-3 w-100 d-flex flex-row justify-content-center align-items-center" style={{maxWidth:'50px'}}>{book.likes}
+                                                            <i className="bi bi-hand-thumbs-up ms-1"></i>
+                                                        </span>
+                                                </div>
+                                                <div className='d-flex flex-column align-items-center'>
+                                                    <h1 className='fs-4 fw-bold'>{book.title}</h1>
+                                                    <h1 className='fs-4 fw-light'>by {book.authors}</h1>
+                                                    <p className='fs-5 fw-lighter text-secondary'>{book.publisher}</p>
+                                                    <h6 className='fs-5'>Reviews:</h6>
+                                                    {book.reviews && book.reviews.length > 0 ? (
+                                                    <ul className="m-0 p-0 text-center">
+                                                        {book.reviews.map((r, i) => (
+                                                        <li key={i}>
+                                                            <p className='fw-light fs-4 mb-3'>{r.text}</p>
+                                                            <p className='fw-lighter text-secondary mb-3'> - {r.author}</p>
+                                                        </li>
+                                                        ))}
+                                                    </ul>
+                                                    ) : (
+                                                    <p className="text-muted">No reviews available.</p>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
                                     <p className="card-text text-muted">by {book.authors}</p>
                                     <p className="card-text"><small className="text-secondary">{book.publisher}</small></p>
                                 </div>
