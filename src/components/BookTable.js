@@ -120,51 +120,51 @@ const BookTableRow = ({ book }) => {
 };
 
 const BookTable = ({ books, loadMore, view }) => {
-  if (view === 'gallery') {
-    return <GalleryView books={books} loadMore={loadMore} />;
-  }
-  return (
-    <div className="container-fluid p-0 text-bg-light">
-      <table className="table mb-0" style={{ tableLayout: 'fixed', width: '100%' }}>
-        <thead className='table-light'>
-          <tr>
-            <th style={{ width: '5%' }} id='arrowBtn'></th>
-            <th style={{ width: '5%', paddingLeft:'13px'}}>#</th>
-            <th style={{ width: '20%' }} id='isbn'>ISBN</th>
-            <th style={{ width: '27%' }} id='title'>Title</th>
-            <th style={{ width: '23%' }} id='authorHead'>Author(s)</th>
-            <th style={{ width: '23%' }} id='publisherHead'>Publisher</th>
-          </tr>
-        </thead>
-      </table>
-      <div id="scrollableDiv" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
-        <InfiniteScroll
-          dataLength={books.length}
-          next={loadMore}
-          hasMore={true}
-          scrollableTarget="scrollableDiv"
-          loader={
-            <div className="d-flex justify-content-center m-4 text-secondary">
-              <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
-            </div>
-          }
-        >
-          <table className="table" style={{ tableLayout: 'fixed', width: '100%' }}>
-            <tbody>
-              {books.map((book, i) => (
-                <BookTableRow
-                  key={`${book.index}-${book.isbn}`}
-                  book={book}
-                />
-              ))}
-            </tbody>
-          </table>
-        </InfiniteScroll>
-      </div>
-    </div>
-  );
+    if (view === 'gallery') {
+        return <GalleryView books={books} loadMore={loadMore} />;
+    }
+    return (
+        <div className="container-fluid p-0 text-bg-light">
+        <table className="table mb-0" style={{ tableLayout: 'fixed', width: '100%' }}>
+            <thead className='table-light'>
+            <tr>
+                <th style={{ width: '5%' }} id='arrowBtn'></th>
+                <th style={{ width: '5%', paddingLeft:'13px'}}>#</th>
+                <th style={{ width: '20%' }} id='isbn'>ISBN</th>
+                <th style={{ width: '27%' }} id='title'>Title</th>
+                <th style={{ width: '23%' }} id='authorHead'>Author(s)</th>
+                <th style={{ width: '23%' }} id='publisherHead'>Publisher</th>
+            </tr>
+            </thead>
+        </table>
+        <div id="scrollableDiv" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
+            <InfiniteScroll
+            dataLength={books.length}
+            next={loadMore}
+            hasMore={true}
+            scrollableTarget="scrollableDiv"
+            loader={
+                <div className="d-flex justify-content-center m-4 text-secondary">
+                <div className="spinner-border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+                </div>
+            }
+            >
+            <table className="table" style={{ tableLayout: 'fixed', width: '100%' }}>
+                <tbody>
+                {books.map((book, i) => (
+                    <BookTableRow
+                    key={`${book.index}-${book.isbn}`}
+                    book={book}
+                    />
+                ))}
+                </tbody>
+            </table>
+            </InfiniteScroll>
+        </div>
+        </div>
+    );
 }
 
 

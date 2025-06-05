@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 
@@ -10,14 +10,26 @@ const languages = [
 
 
 const Header = ({language, setLanguage, seed, setSeed, likes, setLikes, reviews, setReviews, view, setView}) => {
+    const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 580);
+
+    useEffect(() => {
+        const handleResize = () => {
+            const small = window.innerWidth <= 580;
+            setIsSmallScreen(small);
+            if (small) setView('gallery');
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const generateSeed = () => {
         const newSeed = Math.floor(Math.random() * 1e9)
         setSeed(newSeed.toString());
     }
 
     return (
-        <div className="container-fluid text-bg-light p-3 d-flex flex-row align-items-center justify-content-around">
-            <div className="form-floating col-md-2 mx-4">
+        <div id="wholeHeader" className="container-fluid text-bg-light p-3 d-flex column-gap-5 flex-row align-items-center justify-content-around">
+            <div className="form-floating col-md-2">
                 <select 
                     id='langInput' 
                     className="form-select" 
@@ -32,7 +44,7 @@ const Header = ({language, setLanguage, seed, setSeed, likes, setLikes, reviews,
                 </select>
                 <label htmlFor='langInput'>Language</label>
             </div>
-            <div className="col-md-2 mx-4">
+            <div className="col-md-2 ms-2">
                 <div className="input-group">
                 <div className="form-floating">
                     <input type="text" className="form-control" id="seedInput" value={seed} onChange={(e) => setSeed(e.target.value)} placeholder="Seed"/>
@@ -43,41 +55,43 @@ const Header = ({language, setLanguage, seed, setSeed, likes, setLikes, reviews,
                 </button>
                 </div>
             </div>
-            <div className='mx-4 col-md-2'>
+            <div className='ms-2 col-md-2'>
                 <label htmlFor="customRange3" className="form-label">Likes</label>
                 <input type="range" className="form-range" min="0" max="10" value={likes} step="0.1" id="customRange3" onChange={(e) => setLikes(parseFloat(e.target.value))}/>
                 <div className="text-muted">{likes}</div>
             </div>
-            <div className='form-floating mx-4 col-md-2'>
+            <div className='form-floating mx-2 col-md-2'>
                 <input type='number' className="form-control" step='0.1' id="reviewInput" placeholder="Review" value={reviews} onChange={(e) => setReviews(parseFloat(e.target.value))}/>
                 <label htmlFor="reviewInput">Review</label>
             </div>
-            <div className="btn-group ms-auto me-5" role="group" aria-label="Basic radio toggle button group">
-                <input
-                    type="radio"
-                    className="btn-check"
-                    name="btnradio"
-                    id="btnradio1"
-                    autoComplete="off"
-                    checked={view === 'table'}
-                    onChange={() => setView('table')}
-                />
-                <label className="btn btn-outline-primary" htmlFor="btnradio1">
-                    <i className="bi bi-table"></i>
-                </label>
-                <input
-                    type="radio"
-                    className="btn-check"
-                    name="btnradio"
-                    id="btnradio2"
-                    autoComplete="off"
-                    checked={view === 'gallery'}
-                    onChange={() => setView('gallery')}
-                />
-                <label className="btn btn-outline-primary" htmlFor="btnradio2">
-                    <i className="bi bi-book"></i>
-                </label>
-            </div>
+            {!isSmallScreen && (
+                <div className="btn-group ms-auto me-4" role="group" aria-label="Basic radio toggle button group">
+                    <input
+                        type="radio"
+                        className="btn-check"
+                        name="btnradio"
+                        id="btnradio1"
+                        autoComplete="off"
+                        checked={view === 'table'}
+                        onChange={() => setView('table')}
+                    />
+                    <label className="btn btn-outline-primary" htmlFor="btnradio1">
+                        <i className="bi bi-table"></i>
+                    </label>
+                    <input
+                        type="radio"
+                        className="btn-check"
+                        name="btnradio"
+                        id="btnradio2"
+                        autoComplete="off"
+                        checked={view === 'gallery'}
+                        onChange={() => setView('gallery')}
+                    />
+                    <label className="btn btn-outline-primary" htmlFor="btnradio2">
+                        <i className="bi bi-book"></i>
+                    </label>
+                </div>
+            )}
         </div>
     )
 }

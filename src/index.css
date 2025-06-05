@@ -58,3 +58,8 @@ select:focus {
     }
 }
 
+@media(max-width: 820px) {
+    #wholeHeader {
+        column-gap:5px !important;
+    }
+}
