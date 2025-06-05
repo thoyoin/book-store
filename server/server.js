@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const seedrandom = require('seedrandom');
-const { fakerES } = require('@faker-js/faker');
+const { en, es, de, Faker } = require('@faker-js/faker');
+const { all } = require('axios');
 
 const app = express();
 
@@ -12,9 +13,11 @@ const generateBook = (index, seed, language, avgReviews, avgLikes) => {
     const combinedSeed = seed + index.toString() + language;
     const rng = seedrandom(combinedSeed);
 
-    const faker = fakerES;
+    const faker = new Faker ({
+        locale: [en, es, de][language],
+    });
 
-    faker.locale = language;
+/*     faker.locale = language; */
     faker.seed(rng.int32());
 
     const reviewsInt = Math.floor(avgReviews);
@@ -34,7 +37,7 @@ const generateBook = (index, seed, language, avgReviews, avgLikes) => {
         index: index + 1,
         isbn: Array.from({ length: 13 }, () => Math.floor(rng() * 10)).join(''),
         title: faker.commerce.productName(),
-        authors: [faker.person.fullName()],
+        authors: faker.person.fullName(),
         publisher: faker.person.fullName(),
         reviews: reviewList,
         likes: finalLikesCount,
