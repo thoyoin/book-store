@@ -1,12 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const seedrandom = require('seedrandom');
-const { Faker, en, es, de } = require('@faker-js/faker');
+const { Faker, en, ru, pl } = require('@faker-js/faker');
 
 const locales = {
     en,
-    es,
-    de,
+    ru,
+    pl,
 };
 
 
@@ -19,10 +19,11 @@ const generateBook = (index, seed, language, avgReviews, avgLikes) => {
     const combinedSeed = seed + index.toString() + language;
     const rng = seedrandom(combinedSeed);
 
-    const selectedLocale = locales[language] || en;
+    const selectedLocale = locales[language];
 
     const faker = new Faker({
         locale: selectedLocale,
+        fallbackLocale: en
     });
 
     faker.seed(rng.int32());

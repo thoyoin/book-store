@@ -48,7 +48,7 @@ const BookTableRow = ({ book }) => {
                     }}
                     >{book.title}</a>
                     </td>
-                <td style={{ width: '25%', verticalAlign:'middle' }} id='authors'>{book.authors.join(', ')}</td>
+                <td style={{ width: '25%', verticalAlign:'middle' }} id='authors'>{book.authors}</td>
                 <td style={{ width: '24%', verticalAlign:'middle' }} id='publisher'>{book.publisher}</td>
             </tr>
             <tr>
