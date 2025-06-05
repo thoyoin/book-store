@@ -10,7 +10,15 @@ const languages = [
 
 
 const Header = ({language, setLanguage, seed, setSeed, likes, setLikes, reviews, setReviews, view, setView}) => {
-    const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 580);
+    const [isSmallScreen, setIsSmallScreen] = useState(() => window.innerWidth <= 580);
+    
+    useEffect(() => {
+        if (window.innerWidth <= 580) {
+            setView('gallery');
+        } else {
+            setView('table');
+        }
+    }, []);
 
     useEffect(() => {
         const handleResize = () => {
