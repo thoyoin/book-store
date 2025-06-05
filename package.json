@@ -11,6 +11,7 @@
     "axios": "^1.9.0",
     "bootstrap": "^5.3.6",
     "faker": "^6.6.6",
+    "papaparse": "^5.5.3",
     "react": "^19.1.0",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.0",

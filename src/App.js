@@ -1,4 +1,5 @@
 import BookTable from "./components/BookTable";
+import Footer from "./components/Footer";
 import Header from "./components/Header";
 import './index.css'
 import React, { useState, useEffect } from 'react';
@@ -54,6 +55,9 @@ function App() {
         <BookTable
             books={books}
             loadMore={loadMore}
+        />
+        <Footer
+            books={books}
         />
     </div>
   );
