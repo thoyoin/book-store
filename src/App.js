@@ -11,6 +11,7 @@ function App() {
     const [language, setLanguage] = useState('en');
     const [books, setBooks] = useState([]);
     const [page, setPage] = useState(0);
+    const [view, setView] = useState('table');
 
     const fetchBooks = async (pageToFetch = 0) => {
         const res = await fetch(`${process.env.REACT_APP_API_URL}/books?seed=${seed}&language=${language}&likes=${likes}&reviews=${reviews}&page=${pageToFetch}`);
@@ -51,10 +52,13 @@ function App() {
             setReviews={setReviews}
             language={language}
             setLanguage={setLanguage}
+            view={view}
+            setView={setView}
         />
         <BookTable
             books={books}
             loadMore={loadMore}
+            view={view}
         />
         <Footer
             books={books}

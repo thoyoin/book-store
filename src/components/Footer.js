@@ -18,7 +18,7 @@ const Footer = ({ books }) => {
       <div 
         style={{
           width: 'fit-content',
-          margin: '20px auto',
+          margin: '10px auto',
         }}
         className='d-flex justify-content-center h-100'
       >
