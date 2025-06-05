@@ -1,12 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const seedrandom = require('seedrandom');
-const { Faker, en, ru, pl } = require('@faker-js/faker');
+const { Faker, en, fr, pt_BR } = require('@faker-js/faker');
 
 const locales = {
     en,
-    ru,
-    pl,
+    fr,
+    pt_BR,
 };
 
 const app = express();

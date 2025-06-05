@@ -2,8 +2,8 @@ import React from "react";
 
 const languages = [
     { label: 'English (US)', code: 'en' },
-    { label: 'Russian (RU)', code: 'ru' },
-    { label: 'Polish (PL)', code: 'pl' }
+    { label: 'French (FR)', code: 'fr' },
+    { label: 'Portuguese (BR)', code: 'pt_BR' }
 ];
 
 
