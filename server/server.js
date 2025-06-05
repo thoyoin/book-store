@@ -21,7 +21,7 @@ const generateBook = (index, seed, language, avgReviews, avgLikes) => {
     const selectedLocale = locales[language];
 
     const faker = new Faker({
-        locale: [...en, ...selectedLocale],
+        locale: [selectedLocale, en],
     });
 
     faker.seed(rng.int32());
