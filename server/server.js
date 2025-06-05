@@ -9,7 +9,6 @@ const locales = {
     pl,
 };
 
-
 const app = express();
 
 app.use(cors());
@@ -65,8 +64,6 @@ app.get('/books', (req, res) => {
 
     res.json(books);
 });
-
-
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
